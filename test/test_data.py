@@ -54,6 +54,24 @@ SINGLE_SENTENCE_TAG_PAIRS: List[Tuple[Tuple[str, str], ...]] = [
     )
 ]
 
+# Stundum aa , , held sfg1en ég fp1en , , er sfg3en einhver foken einhverju foheþ betri lkenvm en c ekkert fohen . .
+SINGLE_SENTENCE_LEGACY_TAG_PAIRS: List[Tuple[Tuple[str, str], ...]] = [
+    (
+        ("Stundum", "aa"),
+        (",", ","),
+        ("held", "sfg1en"),
+        ("ég", "fp1en"),
+        (",", ","),
+        ("er", "sfg3en"),
+        ("einhver", "foken"),
+        ("einhverju", "foheþ"),
+        ("betri", "lkenvm"),
+        ("en", "c"),
+        ("ekkert", "fohen"),
+        (".", "."),
+    )
+]
+
 TWO_SENTENCE_STRING: str = (
     "Stundum, held ég, er einhver einhverju betri en ekkert. Hvað heldur þú?"
 )
@@ -127,6 +145,29 @@ TWO_SENTENCE_TAG_PAIRS: List[Tuple[Tuple[str, str], ...]] = [
     ),
 ]
 
+TWO_SENTENCE_LEGACY_TAG_PAIRS: List[Tuple[Tuple[str, str], ...]] = [
+    (
+        ("Stundum", "aa"),
+        (",", ","),
+        ("held", "sfg1en"),
+        ("ég", "fp1en"),
+        (",", ","),
+        ("er", "sfg3en"),
+        ("einhver", "foken"),
+        ("einhverju", "foheþ"),
+        ("betri", "lkenvm"),
+        ("en", "c"),
+        ("ekkert", "fohen"),
+        (".", "."),
+    ),
+    (
+        ("Hvað", "fshen"),
+        ("heldur", "c"),
+        ("þú", "fp2en"),
+        ("?", "?"),
+    ),
+]
+
 SINGLE_SENTENCE_ICEPARSER_OUTPUT_OLD_TAGSET: List[str] = [
     "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , , [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . . \n"
 ]
@@ -155,7 +196,15 @@ SINGLE_SENTENCE_TOKEN_TAG_PAIRS_STRING_IN_A_LIST: List[str] = [
     " ".join([" ".join(pair) for pair in sentence])
     for sentence in SINGLE_SENTENCE_TAG_PAIRS
 ]
+SINGLE_SENTENCE_LEGACY_TAG_PAIRS_STRING_IN_A_LIST: List[str] = [
+    " ".join([" ".join(pair) for pair in sentence]) + "\n"
+    for sentence in SINGLE_SENTENCE_LEGACY_TAG_PAIRS
+]
 TWO_SENTENCE_TOKEN_TAG_PAIR_STRINGS_IN_A_LIST = [
     " ".join([" ".join(pair) for pair in sentence])
     for sentence in TWO_SENTENCE_TAG_PAIRS
+]
+TWO_SENTENCE_LEGACY_TAG_PAIR_STRINGS_IN_A_LIST = [
+    " ".join([" ".join(pair) for pair in sentence]) + "\n"
+    for sentence in TWO_SENTENCE_LEGACY_TAG_PAIRS
 ]

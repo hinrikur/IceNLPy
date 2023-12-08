@@ -7,20 +7,17 @@ import logging
 
 from typing import List
 
-import utils
+import icenlpy.utils as utils
 
-# Configure logging
 logging.basicConfig(level=logging.DEBUG)
-logger = logging.getLogger("logger_pipeline")
+logger = logging.getLogger(__name__)
 
-# Load the configuration
-config_path = os.path.join(os.path.dirname(__file__), "../../../config/settings.toml")
-with open(config_path, "r") as file:
-    config = tomlkit.parse(file.read())
+ice_nlp_path = utils.get_ice_nlp_path()
+jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
 
-parser_dir = config["FILE_FOLDERS"]["parsers"]  # type: ignore
-icenlp_jar_path = config["JAR"]["IceNLP"]  # type: ignore
-abs_path_to_icenlp_jar = os.path.join(parser_dir, icenlp_jar_path)  # type: ignore
+abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
+
+logger.debug(f"jar_path: {jar_path}")
 
 
 def run_icetagger(jar_path, input_text, legacy_tagger=False):
@@ -33,21 +30,15 @@ def run_icetagger(jar_path, input_text, legacy_tagger=False):
     :return: The output from IceParser.
     """
 
-    if legacy_tagger:
-        tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text)
-        logger.debug(f"IceTagger output: {tagged}")
-    else:
-        tagged = input_text
-        logger.debug(f"Tagged input: {tagged}")
+    tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text)
+    logger.debug(f"IceTagger output: {tagged}")
 
-    parsed_output = utils.call_icenlp_jar(jar_path, "parser", tagged)
+    logger.debug(f"IceTagger output: {tagged}")
 
-    logger.debug(f"IceParser output: {parsed_output}")
-
-    return parsed_output
+    return tagged
 
 
-def tag_text(input_text: List[str], legacy_tagger=False):
+def tag_text(input_text: List[str], legacy_tagger=True):
     """
     Parses the given text using IceParser and returns the output in the specified format.
 
@@ -56,9 +47,9 @@ def tag_text(input_text: List[str], legacy_tagger=False):
     :return: Parsed output from IceParser.
     """
 
-    parsed_sents = [
+    tagged_sents = [
         run_icetagger(abs_path_to_icenlp_jar, sent, legacy_tagger=legacy_tagger)
         for sent in input_text
     ]
 
-    return parsed_sents
+    return tagged_sents

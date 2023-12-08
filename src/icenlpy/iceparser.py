@@ -7,7 +7,7 @@ import logging
 
 from typing import List
 
-import utils
+import icenlpy.utils as utils
 
 
 logging.basicConfig(level=logging.DEBUG)
@@ -17,6 +17,8 @@ ice_nlp_path = utils.get_ice_nlp_path()
 jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
 
 abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
+
+logger.debug(f"jar_path: {jar_path}")
 
 
 def run_iceparser(jar_path, input_text, legacy_tagger=False):

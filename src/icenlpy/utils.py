@@ -39,6 +39,6 @@ def call_icenlp_jar(jar_path: str, target: str, input_text: str):
 def get_ice_nlp_path():
     """Get the path to the IceNLP directory."""
     # Assuming this function is in a file at the root of the icenlpy package
-    package_dir = Path(__file__).parent
+    package_dir = Path(__file__).parent.parent
     ice_nlp_dir = package_dir / "../lib/IceNLP"
     return ice_nlp_dir.resolve()

@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "icenlpy"
+version = "0.1.0"
+description = "A python wrapper for the IceNLP java library"
+authors = ["Hinrik Hafsteinsson <hinrik.hafst@gmail.com>"]
+readme = "README.md"
+include = [{ path = "lib/IceNLP", format = "sdist" }]
+
+[project.scripts]
+icenlp = "icenlpy.cli:main"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+tomlkit = "^0.12.3"
+
+[tool.poetry.group.test.dependencies]
+pytest = "^7.0.0"
+# pytest-mock = "^3.12.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

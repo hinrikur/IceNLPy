@@ -1,5 +1,5 @@
 import pytest
-from icenlpy.tree import TerminalNode, Phrase, IceNLPySentence
+from src.icenlpy.tree import TerminalNode, Phrase, IceNLPySentence
 
 from typing import List, Tuple
 

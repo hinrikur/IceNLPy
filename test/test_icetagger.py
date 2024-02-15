@@ -7,7 +7,7 @@ from test.test_data import (
     TWO_SENTENCE_LEGACY_TAG_PAIR_STRINGS_IN_A_LIST,
 )
 
-from icenlpy import icetagger
+from src.icenlpy import icetagger
 
 
 @pytest.mark.parametrize(

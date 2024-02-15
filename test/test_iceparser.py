@@ -11,7 +11,7 @@ from test.test_data import (
     TWO_SENTENCE_ICEPARSER_OUTPUT_MIM_GOLD,
 )
 
-from icenlpy import iceparser
+from src.icenlpy import iceparser
 
 
 @pytest.mark.parametrize(

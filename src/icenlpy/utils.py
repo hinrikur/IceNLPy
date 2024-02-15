@@ -40,5 +40,5 @@ def get_ice_nlp_path():
     """Get the path to the IceNLP directory."""
     # Assuming this function is in a file at the root of the icenlpy package
     package_dir = Path(__file__).parent.parent
-    ice_nlp_dir = package_dir / "../lib/IceNLP"
+    ice_nlp_dir = package_dir / "resources/IceNLP/"
     return ice_nlp_dir.resolve()

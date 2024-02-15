@@ -4,21 +4,37 @@ import tomlkit
 import json
 import os
 import logging
+import logging.config
 
 from typing import List
 
 import icenlpy.utils as utils
 
+from icenlpy import JAR_PATH, JAR_FOUND
 
-logging.basicConfig(level=logging.DEBUG)
+
+# logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+ch = logging.StreamHandler()
+ch.setLevel(logging.DEBUG)
 
-ice_nlp_path = utils.get_ice_nlp_path()
-jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
+# create formatter
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 
-abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
+# add formatter to ch
+ch.setFormatter(formatter)
 
-logger.debug(f"jar_path: {jar_path}")
+# add ch to logger
+logger.addHandler(ch)
+
+# ice_nlp_path = utils.get_ice_nlp_path()
+# logger.debug(f"ice_nlp_path: {ice_nlp_path}")
+# jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
+
+# abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
+
+logger.debug(f"jar_path: {JAR_PATH}")
 
 
 def run_iceparser(jar_path, input_text, legacy_tagger=False):
@@ -55,7 +71,7 @@ def parse_text(input_text: List[str], legacy_tagger=False, rainbow=False):
     """
 
     parsed_sents = [
-        run_iceparser(abs_path_to_icenlp_jar, sent, legacy_tagger=legacy_tagger)
+        run_iceparser(JAR_PATH, sent, legacy_tagger=legacy_tagger)
         for sent in input_text
     ]
 

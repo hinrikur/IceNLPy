@@ -5,6 +5,8 @@ import json
 import os
 import logging
 
+from icenlpy import JAR_PATH, JAR_FOUND
+
 from typing import List
 
 import icenlpy.utils as utils
@@ -12,12 +14,12 @@ import icenlpy.utils as utils
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-ice_nlp_path = utils.get_ice_nlp_path()
-jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
+# ice_nlp_path = utils.get_ice_nlp_path()
+# jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
 
-abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
+# abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
 
-logger.debug(f"jar_path: {jar_path}")
+logger.debug(f"jar_path: {JAR_PATH}")
 
 
 def run_icetagger(jar_path, input_text, legacy_tagger=False):
@@ -48,7 +50,7 @@ def tag_text(input_text: List[str], legacy_tagger=True):
     """
 
     tagged_sents = [
-        run_icetagger(abs_path_to_icenlp_jar, sent, legacy_tagger=legacy_tagger)
+        run_icetagger(JAR_PATH, sent, legacy_tagger=legacy_tagger)
         for sent in input_text
     ]
 

@@ -134,7 +134,7 @@ class IceNLPySentence:
                         found.append(self._parse_element(current_element))
                         current_element = ""
                     # Capture the pattern and advance the index
-                    found.append(PunctuationNode(char, input_str[i + 1 : i + 4]))
+                    found.append(PunctuationNode(char, input_str[i + 2 : i + 4]))
                     i += 3  # Skip the next three characters
             else:  # Accumulate characters
                 current_element += char

@@ -41,5 +41,5 @@ def test_iceparser(
     assert len(gold_parsed) == len(gold_expected)
 
     for idx in range(len(tokenized_sentences)):
-        assert legacy_parsed[idx] == legacy_expected[idx]
-        assert gold_parsed[idx] == gold_expected[idx]
+        assert str(legacy_parsed[idx]) == legacy_expected[idx]
+        assert str(gold_parsed[idx]) == gold_expected[idx]

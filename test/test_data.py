@@ -169,20 +169,20 @@ TWO_SENTENCE_LEGACY_TAG_PAIRS: List[Tuple[Tuple[str, str], ...]] = [
 ]
 
 SINGLE_SENTENCE_ICEPARSER_OUTPUT_OLD_TAGSET: List[str] = [
-    "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , , [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . . \n"
+    "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , , [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . ."
 ]
 SINGLE_SENTENCE_ICEPARSER_OUTPUT_MIM_GOLD: List[str] = [
-    "[AdvP Stundum aa ] , pk [VP held sfg1en ] [NP ég fp1en ] , pk [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . pl \n"
+    "[AdvP Stundum aa ] , pk [VP held sfg1en ] [NP ég fp1en ] , pk [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . pl"
 ]
 
 TWO_SENTENCE_ICEPARSER_OUTPUT_OLD_TAGSET: List[str] = [
-    "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , , [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . . \n",
-    "[NPs [NP Hvað fshen ] [CP heldur c ] [NP þú fp2en ] ] ? ? \n",
+    "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , , [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . .",
+    "[NPs [NP Hvað fshen ] [CP heldur c ] [NP þú fp2en ] ] ? ?",
 ]
 
 TWO_SENTENCE_ICEPARSER_OUTPUT_MIM_GOLD: List[str] = [
-    "[AdvP Stundum aa ] , pk [VP held sfg1en ] [NP ég fp1en ] , pk [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . pl \n",
-    "[NP Hvað fsheo ] [VP heldur sfg2en ] [NP þú fp2en ] ? pl \n",
+    "[AdvP Stundum aa ] , pk [VP held sfg1en ] [NP ég fp1en ] , pk [VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] [CP en c ] [NP ekkert fohen ] ] . pl",
+    "[NP Hvað fsheo ] [VP heldur sfg2en ] [NP þú fp2en ] ? pl",
 ]
 
 

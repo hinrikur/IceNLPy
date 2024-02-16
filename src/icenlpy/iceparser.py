@@ -11,7 +11,7 @@ from typing import List
 import icenlpy.utils as utils
 
 from icenlpy import JAR_PATH, JAR_FOUND
-
+from icenlpy.tree import IceNLPySentence
 
 # logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -76,4 +76,5 @@ def parse_text(input_text: List[str], legacy_tagger=False, args={}):
     ]
     if [text.strip for text in input_text] == [sent.strip() for sent in parsed_sents]:
         raise Exception("IceParser failed to parse the input text.")
+    parsed_sents = [IceNLPySentence(sent) for sent in parsed_sents]
     return parsed_sents

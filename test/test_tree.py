@@ -198,7 +198,7 @@ def test_tree_view():
     #     "[VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ]"
     #     "[CP en c ] [NP ekkert fohen ] ] . . \n"
     # )
-    sentence = IceNLPySentence(actual_parsed[0])
+    sentence = actual_parsed[0]
     # print(sentence.view)
     expected_view = (
         "S0\n+-AdvP\n  +-aa: 'Stundum'\n+-VP\n  +-sfg1en: 'held'\n+-NP\n"
@@ -211,7 +211,7 @@ def test_tree_view():
     actual_sentence_all_args = iceparser.parse_text(
         [actual_sentence], legacy_tagger=True, args=all_args
     )
-    sentence = IceNLPySentence(actual_sentence_all_args[0])
+    sentence = actual_sentence_all_args[0]
     expected_view_with_args = (
         "S0\n+-AdvP\n  +-aa: 'Stundum'\n+-VP\n  +-sfg1en: 'held'\n+-NP-SUBJ<\n"
         "  +-fp1en: 'ég'\n+-,: ','\n+-VPb?Vn?\n  +-sfg3en: 'er'\n+-NPs-SUBJ<\n  +-NP?NgNc?\n    +-foken: "
@@ -231,7 +231,7 @@ def test_tree_view():
         [complex_sentence],
         legacy_tagger=True,
     )
-    sentence = IceNLPySentence(very_complex_parse[0])
+    sentence = very_complex_parse[0]
     complex_sentence_expected_view = (
         "S0\n+-NP\n  +-nkfng: 'Drengirnir'\n+-VP\n  +-sfg3fþ: 'fóru'\n+-PP\n"
         "  +-ao: 'í'\n  +-NP\n    +-nheo: 'bíó'\n+-CP\n  +-c: 'og'\n+-VP\n  +-sfg3fþ: 'tóku'\n+-NP\n"
@@ -251,7 +251,7 @@ def test_tree_view():
     complex_sentence_parse_with_args = iceparser.parse_text(
         [complex_sentence], legacy_tagger=True, args=all_args
     )
-    sentence = IceNLPySentence(complex_sentence_parse_with_args[0])
+    sentence = complex_sentence_parse_with_args[0]
     complex_sentence_expected_view_with_args = (
         "S0\n+-NP-SUBJ>\n  +-nkfng: 'Drengirnir'\n+-VP\n  +-sfg3fþ: 'fóru'\n+-PP\n"
         "  +-ao: 'í'\n  +-NP\n    +-nheo: 'bíó'\n+-CP\n  +-c: 'og'\n+-VP\n  +-sfg3fþ: 'tóku'\n+-NP-OBJ<\n"

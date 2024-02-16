@@ -29,6 +29,7 @@ class PunctuationNode(TerminalNode):
     def __init__(self, punctuation: str, tag: str = "punct"):
         # Initialize the base class with the punctuation as both the word and tag
         super().__init__(punctuation, tag)
+        self.label = "punct"
 
     def __repr__(self):
         # Adjust the representation to clearly indicate this is a punctuation node
@@ -45,7 +46,6 @@ class Phrase:
     ):
         self.label = label
         self.elements = []
-        logger.debug(f"Creating phrase with label {label}")
         if elements is not None:
             for element in elements:
                 self.add_child(element)
@@ -69,6 +69,14 @@ class Phrase:
 
 TopLevelElement = Union[Phrase, PunctuationNode]
 
+# NOTE: (From the paper)
+# Additionally, for some of the syntactic functionlabels (see table 2), we use relative position
+# indica-tors (“<” and “>”). For example, *SUBJ> meansthat the verb is positioned to the right of
+# the sub-ject, *SUBJ< denotes that the verb is positioned tothe left, while *SUBJ is used when it
+# is not clearwhere the accompanying verb is positioned or whenthe verb is missing. The motivation
+# behind usingthe indicators is to simplify grammar checking atlater stages. A thorough
+# description of the annota-tion scheme can be found in (Loftsson and Rögn-valdsson, 2006)
+
 
 class IceNLPySentence:
 
@@ -88,7 +96,7 @@ class IceNLPySentence:
         found = []
         current_element = ""
         i = 0
-        logger.debug(f"Parsing input string: {input_str}")
+        logger.debug(f"Processing input string: {input_str}")
         while i < len(input_str):
             char = input_str[i]
             if char == "[":  # Start of a phrase
@@ -134,12 +142,10 @@ class IceNLPySentence:
             i += 1
         # Add any remaining element
         if current_element:
-            logger.debug(f"Adding remaining element: {current_element}")
             found.append(self._parse_element(current_element))
         return found
 
     def _parse_element(self, element: str) -> TopLevelElement:
-        logger.debug(f"Parsing element: '{element}'")
         if element.strip().startswith("["):
             return self._parse_phrase(element)
         else:
@@ -190,6 +196,35 @@ class IceNLPySentence:
                 phrase.add_child(TerminalNode(word, tag))
 
         return phrase
+
+    def _view(self, element=None, level: int = 0) -> str:
+        """Return a string containing an indented map of this subtree"""
+        if element is None and level == 0:
+            # When called without an element and at the root level, introduce the dummy root
+            return "S0\n" + "\n".join(
+                self._view(el, 1) for el in self.top_level_elements
+            ).replace("\n\n", "\n")
+
+        if isinstance(element, Phrase):
+            # Phrase processing
+            indent = "  " * (level - 1) + "+-" if level else ""
+            result = f"{indent}{element.label}\n"
+            for child in element.elements:
+                result += self._view(child, level + 1)
+        elif isinstance(element, TerminalNode):
+            # TerminalNode processing, including PunctuationNode
+            indent = "  " * (level - 1) + "+-"
+            result = f"{indent}{element.tag}: '{element.word}'\n"
+        else:
+            # Fallback for any unrecognized element
+            indent = "  " * (level - 1) + "+-"
+            result = f"{indent}Unknown element\n"
+
+        return result
+
+    @property
+    def view(self) -> str:
+        return self._view()
 
     def __str__(self):
         return " ".join(str(el) for el in self.top_level_elements)

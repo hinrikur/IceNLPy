@@ -1,5 +1,6 @@
 import pytest
 from src.icenlpy.tree import TerminalNode, Phrase, IceNLPySentence
+from src.icenlpy import iceparser
 
 from typing import List, Tuple
 
@@ -163,3 +164,107 @@ def test_from_string():
     sentence = IceNLPySentence(actual_output)
 
     assert str(sentence) == expected_format
+
+
+def test_tree_view():
+    all_args = {
+        "f": True,
+        "a": True,
+        "m": True,
+    }
+
+    single_phrase = IceNLPySentence("[NP ein det bók noun ]")
+    expected_view = "S0\n+-NP\n  +-det: 'ein'\n  +-noun: 'bók'\n"
+    assert single_phrase.view == expected_view
+
+    single_nested_phrase = IceNLPySentence("[NP ein det [PP í prep bók noun ] ]")
+    expected_view = (
+        "S0\n+-NP\n  +-det: 'ein'\n  +-PP\n    +-prep: 'í'\n    +-noun: 'bók'\n"
+    )
+
+    complex_nested_phrase = IceNLPySentence(
+        "[NP ein det [PP í prep bók noun ] ] [VP kemur verb ]"
+    )
+    expected_view = (
+        "S0\n+-NP\n  +-det: 'ein'\n  +-PP\n    +-prep: 'í'\n    +-noun: 'bók'\n"
+        "+-VP\n  +-verb: 'kemur'\n"
+    )
+    assert complex_nested_phrase.view == expected_view
+
+    actual_sentence = "Stundum held ég, er einhver einhverju betri en ekkert ."
+    actual_parsed = iceparser.parse_text([actual_sentence], legacy_tagger=True)
+    # actual_output = (
+    #     "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , ,"
+    #     "[VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ]"
+    #     "[CP en c ] [NP ekkert fohen ] ] . . \n"
+    # )
+    sentence = IceNLPySentence(actual_parsed[0])
+    # print(sentence.view)
+    expected_view = (
+        "S0\n+-AdvP\n  +-aa: 'Stundum'\n+-VP\n  +-sfg1en: 'held'\n+-NP\n"
+        "  +-fp1en: 'ég'\n+-,: ','\n+-VPb\n  +-sfg3en: 'er'\n+-NPs\n  +-NP\n    +-foken: "
+        "'einhver'\n    +-foheþ: 'einhverju'\n    +-AP\n      +-lkenvm: 'betri'\n  +-CP\n    "
+        "+-c: 'en'\n  +-NP\n    +-fohen: 'ekkert'\n+-.: '.'\n"
+    )
+    assert sentence.view == expected_view
+
+    actual_sentence_all_args = iceparser.parse_text(
+        [actual_sentence], legacy_tagger=True, args=all_args
+    )
+    sentence = IceNLPySentence(actual_sentence_all_args[0])
+    expected_view_with_args = (
+        "S0\n+-AdvP\n  +-aa: 'Stundum'\n+-VP\n  +-sfg1en: 'held'\n+-NP-SUBJ<\n"
+        "  +-fp1en: 'ég'\n+-,: ','\n+-VPb?Vn?\n  +-sfg3en: 'er'\n+-NPs-SUBJ<\n  +-NP?NgNc?\n    +-foken: "
+        "'einhver'\n    +-foheþ: 'einhverju'\n    +-AP\n      +-lkenvm: 'betri'\n  +-CP\n    "
+        "+-c: 'en'\n  +-NP\n    +-fohen: 'ekkert'\n+-.: '.'\n"
+    )
+    assert sentence.view == expected_view_with_args
+
+    complex_sentence = (
+        "Drengirnir fóru í bíó og tóku strætó heim en vagninn "
+        "bilaði á miðri leið og þeir þurftu að ganga meira en helming "
+        "leiðarinnar því hvorki foreldrar Jóns né Óttars svöruðu símanum "
+        "og þeir höfðu ekki aðra til að hringja í og biðja um að sækja sig."
+    )
+
+    very_complex_parse = iceparser.parse_text(
+        [complex_sentence],
+        legacy_tagger=True,
+    )
+    sentence = IceNLPySentence(very_complex_parse[0])
+    complex_sentence_expected_view = (
+        "S0\n+-NP\n  +-nkfng: 'Drengirnir'\n+-VP\n  +-sfg3fþ: 'fóru'\n+-PP\n"
+        "  +-ao: 'í'\n  +-NP\n    +-nheo: 'bíó'\n+-CP\n  +-c: 'og'\n+-VP\n  +-sfg3fþ: 'tóku'\n+-NP\n"
+        "  +-nkeo: 'strætó'\n+-AdvP\n  +-aa: 'heim'\n+-CP\n  +-c: 'en'\n+-NP\n  +-nkeng: 'vagninn'\n+-VP\n"
+        "  +-sfg3eþ: 'bilaði'\n+-PP\n  +-aþ: 'á'\n  +-NP\n    +-AP\n      +-lveþsf: 'miðri'\n    +-nveþ: "
+        "'leið'\n+-CP\n  +-c: 'og'\n+-NP\n  +-fpkfn: 'þeir'\n+-VP\n  +-sfg3fþ: 'þurftu'\n+-VPi\n  "
+        "+-cn: 'að'\n  +-sng: 'ganga'\n+-AP\n  +-lhenvm: 'meira'\n+-CP\n  +-c: 'en'\n+-NP\n  +-nkeo: "
+        "'helming'\n+-NP\n  +-nveeg: 'leiðarinnar'\n+-NP\n  +-fpheþ: 'því'\n+-SCP\n  +-c: "
+        "'hvorki'\n+-NPs\n  +-NP\n    +-nkfn: 'foreldrar'\n  +-NP\n    +-nkee-s: 'Jóns'\n  "
+        "+-CP\n    +-c: 'né'\n  +-NP\n    +-nxfn-s: 'Óttars'\n+-VP\n  +-sfg3fþ: 'svöruðu'\n+-NP\n  "
+        "+-nkeþg: 'símanum'\n+-CP\n  +-c: 'og'\n+-NP\n  +-fpkfn: 'þeir'\n+-VP\n  +-sfg3fþ: 'höfðu'\n+-AdvP\n"
+        "  +-aa: 'ekki'\n+-NP\n  +-foveo: 'aðra'\n+-MWE_CP\n  +-ae: 'til'\n  +-cn: 'að'\n+-VPi\n  "
+        "+-sng: 'hringja'\n+-AdvP\n  +-aa: 'í'\n+-CP\n  +-c: 'og'\n+-VPi\n  +-sng: 'biðja'\n+-PP\n  +-ao: "
+        "'um'\n  +-VPi\n    +-cn: 'að'\n    +-sng: 'sækja'\n+-NP\n  +-fpkfo: 'sig'\n+-.: '.'\n"
+    )
+    assert sentence.view == complex_sentence_expected_view
+    complex_sentence_parse_with_args = iceparser.parse_text(
+        [complex_sentence], legacy_tagger=True, args=all_args
+    )
+    sentence = IceNLPySentence(complex_sentence_parse_with_args[0])
+    complex_sentence_expected_view_with_args = (
+        "S0\n+-NP-SUBJ>\n  +-nkfng: 'Drengirnir'\n+-VP\n  +-sfg3fþ: 'fóru'\n+-PP\n"
+        "  +-ao: 'í'\n  +-NP\n    +-nheo: 'bíó'\n+-CP\n  +-c: 'og'\n+-VP\n  +-sfg3fþ: 'tóku'\n+-NP-OBJ<\n"
+        "  +-nkeo: 'strætó'\n+-AdvP\n  +-aa: 'heim'\n+-CP\n  +-c: 'en'\n+-NP-SUBJ>\n  +-nkeng: 'vagninn'\n+-VP\n"
+        "  +-sfg3eþ: 'bilaði'\n+-PP\n  +-aþ: 'á'\n  +-NP\n    +-AP\n      +-lveþsf: 'miðri'\n    +-nveþ: "
+        "'leið'\n+-CP\n  +-c: 'og'\n+-NP-SUBJ>\n  +-fpkfn: 'þeir'\n+-VP\n  +-sfg3fþ: 'þurftu'\n+-VPi\n  "
+        "+-cn: 'að'\n  +-sng: 'ganga'\n+-AP\n  +-lhenvm: 'meira'\n+-CP\n  +-c: 'en'\n+-NP\n  +-nkeo: "
+        "'helming'\n+-NP-QUAL\n  +-nveeg: 'leiðarinnar'\n+-NP\n  +-fpheþ: 'því'\n+-SCP\n  +-c: "
+        "'hvorki'\n+-NPs-SUBJ>\n  +-NP\n    +-nkfn: 'foreldrar'\n  +-NP-QUAL\n    +-nkee-s: 'Jóns'\n  "
+        "+-CP\n    +-c: 'né'\n  +-NP\n    +-nxfn-s: 'Óttars'\n+-VP\n  +-sfg3fþ: 'svöruðu'\n+-NP-OBJ<\n  "
+        "+-nkeþg: 'símanum'\n+-CP\n  +-c: 'og'\n+-NP-SUBJ>\n  +-fpkfn: 'þeir'\n+-VP\n  +-sfg3fþ: 'höfðu'\n+-AdvP\n"
+        "  +-aa: 'ekki'\n+-NP-OBJ<\n  +-foveo: 'aðra'\n+-MWE_CP\n  +-ae: 'til'\n  +-cn: 'að'\n+-VPi\n  "
+        "+-sng: 'hringja'\n+-AdvP\n  +-aa: 'í'\n+-CP\n  +-c: 'og'\n+-VPi\n  +-sng: 'biðja'\n+-PP\n  +-ao: "
+        "'um'\n  +-VPi\n    +-cn: 'að'\n    +-sng: 'sækja'\n+-NP-OBJ<\n  +-fpkfo: 'sig'\n+-.: '.'\n"
+    )
+    assert sentence.view == complex_sentence_expected_view_with_args

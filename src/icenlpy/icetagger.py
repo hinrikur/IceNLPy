@@ -22,7 +22,7 @@ logger = logging.getLogger(__name__)
 logger.debug(f"jar_path: {JAR_PATH}")
 
 
-def run_icetagger(jar_path, input_text, legacy_tagger=False):
+def run_icetagger(jar_path, input_text, legacy_tagger=False, java_args={}):
     """
     Runs the IceParser Java application with the given input text and JAR path.
 
@@ -32,7 +32,7 @@ def run_icetagger(jar_path, input_text, legacy_tagger=False):
     :return: The output from IceParser.
     """
 
-    tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text)
+    tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text, java_args=java_args)
     logger.debug(f"IceTagger output: {tagged}")
 
     logger.debug(f"IceTagger output: {tagged}")
@@ -53,5 +53,4 @@ def tag_text(input_text: List[str], legacy_tagger=True):
         run_icetagger(JAR_PATH, sent, legacy_tagger=legacy_tagger)
         for sent in input_text
     ]
-
     return tagged_sents

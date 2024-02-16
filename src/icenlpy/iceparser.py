@@ -37,7 +37,7 @@ logger.addHandler(ch)
 logger.debug(f"jar_path: {JAR_PATH}")
 
 
-def run_iceparser(jar_path, input_text, legacy_tagger=False):
+def run_iceparser(jar_path, input_text, legacy_tagger=False, java_args={}):
     """
     Runs the IceParser Java application with the given input text and JAR path.
 
@@ -48,20 +48,20 @@ def run_iceparser(jar_path, input_text, legacy_tagger=False):
     """
 
     if legacy_tagger:
-        tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text)
+        tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text, java_args={})
         logger.debug(f"IceTagger output: {tagged}")
     else:
         tagged = input_text
         logger.debug(f"Tagged input: {tagged}")
 
-    parsed_output = utils.call_icenlp_jar(jar_path, "parser", tagged)
+    parsed_output = utils.call_icenlp_jar(jar_path, "parser", tagged, java_args)
 
     logger.debug(f"IceParser output: {parsed_output}")
 
     return parsed_output
 
 
-def parse_text(input_text: List[str], legacy_tagger=False, rainbow=False):
+def parse_text(input_text: List[str], legacy_tagger=False, args={}):
     """
     Parses the given text using IceParser and returns the output in the specified format.
 
@@ -71,8 +71,9 @@ def parse_text(input_text: List[str], legacy_tagger=False, rainbow=False):
     """
 
     parsed_sents = [
-        run_iceparser(JAR_PATH, sent, legacy_tagger=legacy_tagger)
+        run_iceparser(JAR_PATH, sent, legacy_tagger=legacy_tagger, java_args=args)
         for sent in input_text
     ]
-
+    if [text.strip for text in input_text] == [sent.strip() for sent in parsed_sents]:
+        raise Exception("IceParser failed to parse the input text.")
     return parsed_sents

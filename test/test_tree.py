@@ -116,30 +116,50 @@ def test_sentence_repr(phrases, expected_repr):
 
 
 def test_from_string():
-    sentence = IceNLPySentence("[NP ein det bók noun ]")
-    assert str(sentence) == "[NP ein det bók noun ]"
-    assert sentence.phrases[0].label == "NP"
-    assert sentence.phrases[0].elements[0].word == "ein"
-    assert sentence.phrases[0].elements[0].tag == "det"
-    assert sentence.phrases[0].elements[1].word == "bók"
-    assert sentence.phrases[0].elements[1].tag == "noun"
-    sentence = IceNLPySentence("[NP ein det [PP í prep bók noun ] ]")
-    assert str(sentence) == "[NP ein det [PP í prep bók noun ] ]"
-    assert sentence.phrases[0].label == "NP"
-    assert sentence.phrases[0].elements[0].word == "ein"
-    assert sentence.phrases[0].elements[0].tag == "det"
-    assert sentence.phrases[0].elements[1].label == "PP"
-    assert sentence.phrases[0].elements[1].elements[0].word == "í"
-    assert sentence.phrases[0].elements[1].elements[0].tag == "prep"
-    assert sentence.phrases[0].elements[1].elements[1].word == "bók"
-    assert sentence.phrases[0].elements[1].elements[1].tag == "noun"
-    sentence = IceNLPySentence("[NP ein det [PP í prep bók noun ] ] [VP kemur verb ]")
-    assert str(sentence) == "[NP ein det [PP í prep bók noun ] ] [VP kemur verb ]"
-    assert sentence.phrases[0].label == "NP"
-    assert sentence.phrases[0].elements[0].word == "ein"
-    assert sentence.phrases[0].elements[0].tag == "det"
-    assert sentence.phrases[0].elements[1].label == "PP"
-    assert sentence.phrases[0].elements[1].elements[0].word == "í"
-    assert sentence.phrases[0].elements[1].elements[0].tag == "prep"
-    assert sentence.phrases[0].elements[1].elements[1].word == "bók"
-    assert sentence.phrases[0].elements[1].elements[1].tag == "noun"
+    single_phrase = IceNLPySentence("[NP ein det bók noun ]")
+    assert str(single_phrase) == "[NP ein det bók noun ]"
+    assert single_phrase.phrases[0].label == "NP"
+    assert single_phrase.phrases[0].elements[0].word == "ein"
+    assert single_phrase.phrases[0].elements[0].tag == "det"
+    assert single_phrase.phrases[0].elements[1].word == "bók"
+    assert single_phrase.phrases[0].elements[1].tag == "noun"
+    single_nested_phrase = IceNLPySentence("[NP ein det [PP í prep bók noun ] ]")
+    assert str(single_nested_phrase) == "[NP ein det [PP í prep bók noun ] ]"
+    assert single_nested_phrase.phrases[0].label == "NP"
+    assert single_nested_phrase.phrases[0].elements[0].word == "ein"
+    assert single_nested_phrase.phrases[0].elements[0].tag == "det"
+    assert single_nested_phrase.phrases[0].elements[1].label == "PP"
+    assert single_nested_phrase.phrases[0].elements[1].elements[0].word == "í"
+    assert single_nested_phrase.phrases[0].elements[1].elements[0].tag == "prep"
+    assert single_nested_phrase.phrases[0].elements[1].elements[1].word == "bók"
+    assert single_nested_phrase.phrases[0].elements[1].elements[1].tag == "noun"
+    complex_nested_phrase = IceNLPySentence(
+        "[NP ein det [PP í prep bók noun ] ] [VP kemur verb ]"
+    )
+    assert (
+        str(complex_nested_phrase)
+        == "[NP ein det [PP í prep bók noun ] ] [VP kemur verb ]"
+    )
+    assert complex_nested_phrase.phrases[0].label == "NP"
+    assert complex_nested_phrase.phrases[0].elements[0].word == "ein"
+    assert complex_nested_phrase.phrases[0].elements[0].tag == "det"
+    assert complex_nested_phrase.phrases[0].elements[1].label == "PP"
+    assert complex_nested_phrase.phrases[0].elements[1].elements[0].word == "í"
+    assert complex_nested_phrase.phrases[0].elements[1].elements[0].tag == "prep"
+    assert complex_nested_phrase.phrases[0].elements[1].elements[1].word == "bók"
+    assert complex_nested_phrase.phrases[0].elements[1].elements[1].tag == "noun"
+
+    actual_output = (
+        "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , ,"
+        "[VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ]"
+        "[CP en c ] [NP ekkert fohen ] ] . . \n"
+    )
+    expected_format = (
+        "[AdvP Stundum aa ] , , [VP held sfg1en ] [NP ég fp1en ] , , "
+        "[VPb er sfg3en ] [NPs [NP einhver foken einhverju foheþ [AP betri lkenvm ] ] "
+        "[CP en c ] [NP ekkert fohen ] ] . ."
+    )
+
+    sentence = IceNLPySentence(actual_output)
+
+    assert str(sentence) == expected_format

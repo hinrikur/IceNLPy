@@ -37,6 +37,23 @@ SINGLE_SENTENCE_TAGS: Tuple[Tuple[str, ...], ...] = (
     ),
 )
 
+SINGLE_SENTENCE_LEGACY_TAGS: Tuple[Tuple[str, ...], ...] = (
+    (
+        "aa",
+        ",",
+        "sfg1en",
+        "fp1en",
+        ",",
+        "sfg3en",
+        "foken",
+        "foheþ",
+        "lkenvm",
+        "c",
+        "fohen",
+        ".",
+    ),
+)
+
 SINGLE_SENTENCE_TAG_PAIRS: List[Tuple[Tuple[str, str], ...]] = [
     (
         ("Stundum", "aa"),
@@ -119,6 +136,29 @@ TWO_SENTENCE_TAGS: Tuple[Tuple[str, ...], ...] = (
         "sfg2en",
         "fp2en",
         "pl",
+    ),
+)
+
+TWO_SENTENCE_LEGACY_TAGS: Tuple[Tuple[str, ...], ...] = (
+    (
+        "aa",
+        ",",
+        "sfg1en",
+        "fp1en",
+        ",",
+        "sfg3en",
+        "foken",
+        "foheþ",
+        "lkenvm",
+        "c",
+        "fohen",
+        ".",
+    ),
+    (
+        "fshen",
+        "c",
+        "fp2en",
+        "?",
     ),
 )
 

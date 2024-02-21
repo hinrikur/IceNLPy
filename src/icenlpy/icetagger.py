@@ -40,17 +40,26 @@ def run_icetagger(jar_path, input_text, legacy_tagger=False, java_args={}):
     return tagged
 
 
-def tag_text(input_text: List[str], legacy_tagger=True):
+def tag_text(
+    input_text: List[str],
+    legacy_tagger=True,
+    args={},
+    return_tags_only=False,
+):
     """
     Parses the given text using IceParser and returns the output in the specified format.
 
-    :param input_text: The text to parse.
+    :param input_text: The text to parse. The standard format is a list of strings, where each string is a sentence.
     :param output_format: The desired output format ('json' or 'xml').
     :return: Parsed output from IceParser.
     """
-
-    tagged_sents = [
-        run_icetagger(JAR_PATH, sent, legacy_tagger=legacy_tagger)
-        for sent in input_text
-    ]
-    return tagged_sents
+    text = "\n".join(input_text)
+    tagged_text = run_icetagger(
+        JAR_PATH, text, legacy_tagger=legacy_tagger, java_args=args
+    )
+    tagged_text = tagged_text.strip().split("\n")
+    tagged_text = [sentence + "\n" for sentence in tagged_text]
+    if return_tags_only:
+        return tuple([tuple(sentence.split()[1::2]) for sentence in tagged_text])
+    else:
+        return tagged_text

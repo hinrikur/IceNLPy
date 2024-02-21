@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "icenlpy"
-version = "0.1.5"
+version = "0.1.6"
 description = "A python wrapper for the IceNLP java library"
 authors = ["Hinrik Hafsteinsson <hinrik.hafst@gmail.com>"]
 readme = "README.md"

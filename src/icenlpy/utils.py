@@ -9,6 +9,7 @@ logger = logging.getLogger(__name__)
 ICENLP_CLASS_MAP = {
     "tagger": "RunIceTagger",
     "parser": "RunIceParser",
+    "tokenizer": "RunTokenizer",
 }
 
 

@@ -2,7 +2,7 @@ import re
 import logging
 import string
 
-from typing import List, Union, TypeVar
+from typing import List, Union, TypeVar, Generator
 
 TPhrase = TypeVar("TPhrase", bound="Phrase")
 
@@ -80,7 +80,8 @@ TopLevelElement = Union[Phrase, PunctuationNode]
 
 class IceNLPySentence:
 
-    def __init__(self, input_data):
+    def __init__(self, input_data, *args, **kwargs):
+        self._tokens = []
         if isinstance(input_data, str):
             self.top_level_elements: List[TopLevelElement] = self._parse_from_string(
                 input_data.strip()
@@ -120,6 +121,7 @@ class IceNLPySentence:
                         found.append(self._parse_element(current_element))
                         current_element = ""
                     # Capture the pattern and advance the index
+                    self._tokens.append(char)
                     found.append(PunctuationNode(char, char))
                     i += 2  # Skip the next two characters
                 # Check for ", pX" pattern
@@ -134,6 +136,7 @@ class IceNLPySentence:
                         found.append(self._parse_element(current_element))
                         current_element = ""
                     # Capture the pattern and advance the index
+                    self._tokens.append(char)
                     found.append(PunctuationNode(char, input_str[i + 2 : i + 4]))
                     i += 3  # Skip the next three characters
             else:  # Accumulate characters
@@ -193,6 +196,7 @@ class IceNLPySentence:
                 phrase.add_child(self._parse_phrase(element[1:-1]))
             else:
                 word, tag = element.split(maxsplit=1)
+                self._tokens.append(word)
                 phrase.add_child(TerminalNode(word, tag))
 
         return phrase
@@ -225,6 +229,14 @@ class IceNLPySentence:
     @property
     def view(self) -> str:
         return self._view()
+
+    @property
+    def text(self) -> str:
+        return " ".join(self.tokens())
+
+    def tokens(self) -> Generator[str, None, None]:
+        for token in self._tokens:
+            yield token
 
     def __str__(self):
         return " ".join(str(el) for el in self.top_level_elements)

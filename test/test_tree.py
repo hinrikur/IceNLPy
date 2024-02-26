@@ -268,3 +268,26 @@ def test_tree_view():
         "'um'\n  +-VPi\n    +-cn: 'að'\n    +-sng: 'sækja'\n+-NP-OBJ<\n  +-fpkfo: 'sig'\n+-.: '.'\n"
     )
     assert sentence.view == complex_sentence_expected_view_with_args
+
+
+def test_tree_text():
+    complex_sentence = (
+        "Drengirnir fóru í bíó og tóku strætó heim en vagninn "
+        "bilaði á miðri leið og þeir þurftu að ganga meira en helming "
+        "leiðarinnar því hvorki foreldrar Jóns né Óttars svöruðu símanum "
+        "og þeir höfðu ekki aðra til að hringja í og biðja um að sækja sig."
+    )
+
+    very_complex_parse = iceparser.parse_text(
+        [complex_sentence],
+        legacy_tagger=True,
+    )
+
+    sentence = very_complex_parse[0]
+    complex_sentence_expected_text = (
+        "Drengirnir fóru í bíó og tóku strætó heim en vagninn bilaði á miðri leið og þeir þurftu að ganga meira en helming "
+        "leiðarinnar því hvorki foreldrar Jóns né Óttars svöruðu símanum og þeir höfðu ekki aðra til að hringja í og biðja um að sækja sig ."
+    )
+
+    assert sentence.text == complex_sentence_expected_text
+    assert list(sentence.tokens()) == complex_sentence_expected_text.split()

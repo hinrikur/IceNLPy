@@ -2,16 +2,13 @@
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3817/)
 ![PyPI](https://img.shields.io/pypi/v/icenlpy)
 
-
-
-
 # IceNL*Py*
 
 #### 🐍 A Python wrapper for IceNLP
 
-What if we could use [IceNLP](https://clarin.is/en/resources/icenlp/) like any other Python NLP package? Now we can!
+Ever wanted to use [IceNLP](https://clarin.is/en/resources/icenlp/) with the ease of any other Python package? Now you can!
 
-**IceNL*Py*** is a Python wrapper for the Java-based IceNLP toolkit for Icelandic. Although made for fun, the package is fully functional and can be used in real-world projects.
+**IceNL*Py*** is a Python wrapper for the Java-based IceNLP toolkit for Icelandic. Although originally made for fun, the package is fully functional and can be used in real-world projects.
 
 ## Usage
 
@@ -40,10 +37,10 @@ What if we could use [IceNLP](https://clarin.is/en/resources/icenlp/) like any o
 [AdvP að aa norðan aa ] . .], [[NP Hvað fshen ] [VP segirðu sfg2en ] [PP um ao [NP það fpheo ] ] ? ?]]
 
 >>> for sent in parsed:
-        print(f"Sentence text: {sent.text}\n")
+...     print(f"Sentence text: {sent.text}\n")
 ...     print(sent.view)
 
-Sentence text: Hann er mjög góður íslenskufræðingur að norðan .
+Sentence text: Hann er mjög virtur málfræðingur að norðan .
 
 S0
 +-NP
@@ -54,8 +51,8 @@ S0
   +-AP
     +-AdvP
       +-aa: 'mjög'
-    +-lkensf: 'góður'
-  +-nken: 'íslenskufræðingur'
+    +-lkensf: 'virtur'
+  +-nken: 'málfræðingur'
 +-AdvP
   +-aa: 'að'
   +-aa: 'norðan'
@@ -105,12 +102,12 @@ optional arguments:
   -t, --tree-view       Print the output in a tree view format. Only applies to IceParser.
 
 
-$ icenlpy tokenizer "Hann er mjög góður íslenskufræðingur að norðan." -of 1
+$ icenlpy tokenizer "Hann er mjög virtur málfræðingur að norðan." -of 1
 
 Hann
 er
 mjög
-góður
+virtur
 málfræðingur
 að
 norðan
@@ -119,9 +116,9 @@ norðan
 
 ## Features
 
-The package is designed to be as simple as possible, and integrate well into established workflows in NLP projects which use purely Python based packages, e.g. [GreynirEngine](https://github.com/mideind/GreynirEngine) or [spaCy](https://spacy.io/). Dependencies are kept to a minimum outside the Python standard library and the IceNLP Java library itself.
+The package is designed to be as simple as possible, and integrate well into established workflows in NLP projects which use purely Python-implemented packages, e.g. [GreynirEngine](https://github.com/mideind/GreynirEngine) for Icelandic or [spaCy](https://spacy.io/) for other languages. Dependencies are kept to a minimum outside the Python standard library and the IceNLP Java library itself.
 
-With this in mind the package interacts with the JAVA clusters using the `subprocess` module, which, although simple, has not been tested for performance or scalability.
+With this in mind the package interacts with the JAVA clusters using simple I/O calls via the `subprocess` module. This is simple and lightweight, but has not been tested for specifically for performance or scalability.
 
 As of pre-release version 0.1.7, the package supports the following features:
 
@@ -129,7 +126,7 @@ As of pre-release version 0.1.7, the package supports the following features:
 - Part-of-speech tagging via the `icetagger` module
 - Parsing via the `iceparser` module
 
-Along with the built-in features of IceNLP, the package also includes a simple way to convert IceNLP output to a more human-readable format, and dedicated object types to better manipulate the output in external pipelines.
+Along with the built-in features of IceNLP, the package also includes a simple way to convert IceNLP output to a more human-readable format, and dedicated object types to better manipulate the output in external pipelines. As such, it emulates the functionality of more modern NLP toolkits, particularly GreynirEngine.
 
 Future version of the package may include additional features, such as named entity recognition and lemmatization.
 
@@ -144,7 +141,7 @@ IceNLP, a groundbreaking NLP library for Icelandic was developed by Hrafn Loftss
 - Lemmatization
 - Morphological analysis
 
-Although today considered a legacy application and well outside the realm of state of the art technology, IceNLP is still maintained and has both practical and educational value. With this in mind, a simple way to implement the library in Python was developed, which is the basis for this package.
+Although today considered a legacy application and well outside the realm of state of the art technology, IceNLP is still maintained and has both practical and educational value. With this in mind, a simple way to implement the library in Python was developed, which is the basis for this Python package.
 
 ## Prerequisites
 
@@ -167,4 +164,4 @@ pip install -e .
 
 ## Acknowledgements
 
-IceNLP was originally 
+IceNLP is developed and maintained by Hrafn Loftsson and the University of Reykjavík. The IceNLPy Python wrapper was developed by Hinrik Hafsteinsson.

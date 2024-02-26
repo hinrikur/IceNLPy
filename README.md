@@ -18,22 +18,22 @@ Ever wanted to use [IceNLP](https://clarin.is/en/resources/icenlp/) with the eas
 
 >>> from icenlpy import icetagger, iceparser, tokenizer
 
->>> text = "Hann er mjög góður íslenskufræðingur að norðan. Hvað segirðu um það?"
+>>> text = "Hann er mjög virtur málfræðingur að norðan. Hvað segirðu um það?"
 >>> tokens = tokenizer.split_into_sentences(text)
 >>> tokens
 
-['Hann er mjög góður íslenskufræðingur að norðan .', 'Hvað segirðu um það ?']
+['Hann er mjög virtur málfræðingur að norðan .', 'Hvað segirðu um það ?']
 
 >>> tagged = icetagger.tag_text(tokens)
 >>> tagged
 
-['Hann fpken er sfg3en mjög aa góður lkensf íslenskufræðingur nken að aa norðan aa . .\n', 
+['Hann fpken er sfg3en mjög aa virtur lkensf málfræðingur nken að aa norðan aa . .\n', 
 'Hvað fshen segirðu sfg2en um ao það fpheo ? ?\n']
 
 >>> parsed = iceparser.parse_text(tagged)
 >>> parsed
 
-[[[NP Hann fpken ] [VPb er sfg3en ] [NP [AP [AdvP mjög aa ] góður lkensf ] íslenskufræðingur nken ]
+[[[NP Hann fpken ] [VPb er sfg3en ] [NP [AP [AdvP mjög aa ] virtur lkensf ] málfræðingur nken ]
 [AdvP að aa norðan aa ] . .], [[NP Hvað fshen ] [VP segirðu sfg2en ] [PP um ao [NP það fpheo ] ] ? ?]]
 
 >>> for sent in parsed:

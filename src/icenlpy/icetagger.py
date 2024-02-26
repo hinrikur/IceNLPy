@@ -31,10 +31,9 @@ def run_icetagger(jar_path, input_text, legacy_tagger=False, java_args={}):
     :param output_format: The desired output format ('json' or 'xml').
     :return: The output from IceParser.
     """
+    logger.debug(f"Running IceTagger with input: {input_text}")
 
     tagged = utils.call_icenlp_jar(jar_path, "tagger", input_text, java_args=java_args)
-    logger.debug(f"IceTagger output: {tagged}")
-
     logger.debug(f"IceTagger output: {tagged}")
 
     return tagged
@@ -43,7 +42,7 @@ def run_icetagger(jar_path, input_text, legacy_tagger=False, java_args={}):
 def tag_text(
     input_text: List[str],
     legacy_tagger=True,
-    args={},
+    args={"lf": 3},
     return_tags_only=False,
 ):
     """

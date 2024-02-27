@@ -1,6 +1,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3817/)
+[![Release](https://shields.io/github/v/release/hinrikur/icenlpy?display_name=tag)]()
 ![PyPI](https://img.shields.io/pypi/v/icenlpy)
+[![Build](https://github.com/hinrikur/icenlpy/actions/workflows/test.yml/badge.svg)]()
 
 # IceNL*Py*
 
@@ -120,7 +122,7 @@ The package is designed to be as simple as possible, and integrate well into est
 
 With this in mind the package is distributed with the original IceNLP JAVA clusters, and interacts with them using simple I/O calls via the `subprocess` module. This is simple and lightweight, but has not been tested for specifically for performance or scalability.
 
-As of pre-release version 0.1.7, the package supports the following features:
+As of pre-release version 0.2.1, the package supports the following features:
 
 - Tokenization via the `tokenizer` module
 - Part-of-speech tagging via the `icetagger` module

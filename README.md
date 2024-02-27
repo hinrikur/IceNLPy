@@ -118,7 +118,7 @@ norðan
 
 The package is designed to be as simple as possible, and integrate well into established workflows in NLP projects which use purely Python-implemented packages, e.g. [GreynirEngine](https://github.com/mideind/GreynirEngine) for Icelandic or [spaCy](https://spacy.io/) for other languages. Dependencies are kept to a minimum outside the Python standard library and the IceNLP Java library itself.
 
-With this in mind the package interacts with the JAVA clusters using simple I/O calls via the `subprocess` module. This is simple and lightweight, but has not been tested for specifically for performance or scalability.
+With this in mind the package is distributed with the original IceNLP JAVA clusters, and interacts with them using simple I/O calls via the `subprocess` module. This is simple and lightweight, but has not been tested for specifically for performance or scalability.
 
 As of pre-release version 0.1.7, the package supports the following features:
 

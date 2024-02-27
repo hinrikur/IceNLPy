@@ -1,7 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.8](https://img.shields.io/badge/python-3.8-blue.svg)](https://www.python.org/downloads/release/python-3817/)
 [![Release](https://shields.io/github/v/release/hinrikur/icenlpy?display_name=tag)]()
-![PyPI](https://img.shields.io/pypi/v/icenlpy)
+[![PyPI](https://img.shields.io/pypi/v/icenlpy)]()
 [![Build](https://github.com/hinrikur/icenlpy/actions/workflows/test.yml/badge.svg)]()
 
 # IceNL*Py*

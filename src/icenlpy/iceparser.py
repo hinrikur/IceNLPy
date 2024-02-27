@@ -1,8 +1,3 @@
-import subprocess
-import shlex
-import tomlkit
-import json
-import os
 import logging
 import logging.config
 
@@ -10,14 +5,14 @@ from typing import List
 
 import icenlpy.utils as utils
 
-from icenlpy import JAR_PATH, JAR_FOUND
+from icenlpy import JAR_PATH
 from icenlpy.tree import IceNLPySentence
 
 # logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 ch = logging.StreamHandler()
-ch.setLevel(logging.DEBUG)
+ch.setLevel(logging.INFO)
 
 # create formatter
 formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -27,12 +22,6 @@ ch.setFormatter(formatter)
 
 # add ch to logger
 logger.addHandler(ch)
-
-# ice_nlp_path = utils.get_ice_nlp_path()
-# logger.debug(f"ice_nlp_path: {ice_nlp_path}")
-# jar_path = ice_nlp_path / "dist/IceNLPCore.jar"
-
-# abs_path_to_icenlp_jar = os.path.join(ice_nlp_path, jar_path)
 
 logger.debug(f"jar_path: {JAR_PATH}")
 

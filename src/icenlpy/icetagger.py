@@ -5,13 +5,13 @@ import json
 import os
 import logging
 
-from icenlpy import JAR_PATH, JAR_FOUND
+from icenlpy import JAR_PATH
 
 from typing import List
 
 import icenlpy.utils as utils
 
-logging.basicConfig(level=logging.DEBUG)
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # ice_nlp_path = utils.get_ice_nlp_path()
